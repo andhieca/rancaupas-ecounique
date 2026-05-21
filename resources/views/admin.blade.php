@@ -824,7 +824,7 @@
                             </div>
                             <button type="submit"
                                 class="w-full bg-white border border-gray-300 hover:bg-forest-50 hover:border-forest-300 text-gray-700 hover:text-forest-700 py-2.5 rounded-lg font-bold flex items-center justify-center transition-all shadow-sm">
-                                <i data-lucide="download" class="w-4 h-4 mr-2"></i> Ekspor format Excel
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i> Unduh Laporan PDF
                             </button>
                         </form>
                     </div>
