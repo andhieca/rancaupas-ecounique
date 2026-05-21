@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Ranca Upas</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
     <!-- Vite Assets (Tailwind CSS + JS) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Google Fonts -->
