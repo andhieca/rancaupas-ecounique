@@ -28,17 +28,17 @@
                     <a href="{{ route('home') }}" class="flex items-center group">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo Ranca Upas" class="h-9 w-9 sm:h-11 sm:w-11 object-contain">
                     </a>
-                    <span class="hidden sm:block text-forest-200 text-lg font-light">|</span>
-                    <span class="hidden sm:block text-forest-700 font-semibold text-sm tracking-wide">Dashboard Pengunjung</span>
+                    <span class="hidden sm:block text-forest-200 text-lg font-light shrink-0">|</span>
+                    <span class="hidden md:block text-forest-700 font-semibold text-sm tracking-wide truncate">Dashboard Pengunjung</span>
                 </div>
-                <nav class="flex items-center space-x-2 sm:space-x-5">
-                    <a href="{{ route('home') }}" class="text-forest-700 hover:text-earth-600 font-medium transition-colors hidden sm:flex items-center text-sm">
+                <nav class="flex items-center space-x-2 sm:space-x-5 min-w-0">
+                    <a href="{{ route('home') }}" class="text-forest-700 hover:text-earth-600 font-medium transition-colors hidden md:flex items-center text-sm shrink-0">
                         <i data-lucide="home" class="w-4 h-4 mr-1.5"></i>Beranda
                     </a>
-                    <div class="hidden sm:block w-px h-5 bg-forest-200"></div>
-                    <div class="flex items-center space-x-2 sm:space-x-3">
-                        <a href="{{ route('visitor.dashboard') }}?tab=profil" class="text-forest-700 hover:text-earth-600 font-medium hidden sm:flex items-center text-sm transition-colors">
-                            <i data-lucide="user" class="w-4 h-4 mr-1.5 text-forest-400"></i>{{ auth()->user()->name }}
+                    <div class="hidden md:block w-px h-5 bg-forest-200 shrink-0"></div>
+                    <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                        <a href="{{ route('visitor.dashboard') }}?tab=profil" class="text-forest-700 hover:text-earth-600 font-medium hidden sm:flex items-center text-sm transition-colors truncate max-w-[120px] lg:max-w-[200px]">
+                            <i data-lucide="user" class="w-4 h-4 mr-1.5 text-forest-400 shrink-0"></i><span class="truncate">{{ auth()->user()->name }}</span>
                         </a>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
@@ -72,8 +72,8 @@
             </div>
 
             <!-- Tab Navigation -->
-            <div class="flex items-center mb-6 sm:mb-8">
-                <div class="flex bg-white rounded-xl sm:rounded-2xl shadow-md border border-forest-100 p-1 sm:p-1.5">
+            <div class="mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 scrollbar-hide">
+                <div class="inline-flex bg-white rounded-xl sm:rounded-2xl shadow-md border border-forest-100 p-1 sm:p-1.5 w-max">
                     <button @click="activeTab = 'katalog'" :class="activeTab === 'katalog' ? 'bg-forest-600 text-white shadow-lg shadow-forest-600/30' : 'text-forest-600 hover:bg-forest-50'" class="flex items-center px-4 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm rounded-lg sm:rounded-xl font-semibold transition-all duration-300 justify-center whitespace-nowrap">
                         <i data-lucide="layout-grid" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> Katalog Wisata
                     </button>
@@ -93,7 +93,7 @@
 
                 <!-- Filter & Search Bar -->
                 <div class="bg-white rounded-xl sm:rounded-2xl shadow-md border border-forest-100 p-3 sm:p-5 mb-6 sm:mb-8">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-3 sm:gap-4">
                         <!-- Search -->
                         <div class="relative flex-1 w-full min-w-0">
                             <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-forest-400 pointer-events-none"></i>
@@ -101,7 +101,7 @@
                                 class="w-full pl-11 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-sm text-forest-900 placeholder-forest-400 focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all">
                         </div>
                         <!-- Sort -->
-                        <div class="flex items-center space-x-2 w-full sm:w-auto min-w-0">
+                        <div class="flex items-center space-x-2 w-full md:w-auto min-w-0">
                             <label class="text-xs sm:text-sm font-medium text-forest-600 whitespace-nowrap shrink-0">
                                 <i data-lucide="arrow-up-down" class="w-3.5 h-3.5 sm:w-4 sm:h-4 inline mr-1 -mt-0.5"></i>Urutkan:
                             </label>
@@ -202,7 +202,7 @@
                                 <!-- 1. Jenis Wisata -->
                                 <div>
                                     <label class="block text-sm font-bold text-forest-900 mb-3">1. Jenis Wisata</label>
-                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                                         <label class="relative cursor-pointer">
                                             <input type="radio" name="jenis_wisata" value="" class="peer sr-only" {{ empty(request('jenis_wisata')) ? 'checked' : '' }}>
                                             <div class="px-4 py-3 rounded-xl border border-gray-200 bg-white peer-checked:border-forest-500 peer-checked:bg-forest-50 peer-checked:text-forest-700 hover:bg-gray-50 flex items-center transition-all h-full">
@@ -242,7 +242,7 @@
                                 <!-- 3. Fasilitas -->
                                 <div>
                                     <label class="block text-sm font-bold text-forest-900 mb-2">3. Fasilitas yang diinginkan <span class="text-xs font-normal text-gray-500 ml-1">(Pilih lebih dari satu)</span></label>
-                                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
                                         @php
                                             $reqFasilitas = request('fasilitas', []);
                                             $fasilitasList = ['Toilet', 'Air Panas', 'Parkir', 'Tempat Makan', 'Mushola'];
