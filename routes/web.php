@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::match(['get', 'post'], '/visitor', [VisitorController::class, 'index'])->name('visitor.dashboard');
     Route::post('/visitor/rate', [VisitorController::class, 'rate'])->name('visitor.rate');
     Route::get('/visitor/detail/{tourism}', [VisitorController::class, 'detail'])->name('visitor.detail');
+    Route::put('/visitor/profile', [VisitorController::class, 'updateProfile'])->name('visitor.profile.update');
 });
 
 Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\IsAdmin::class])->group(function () {

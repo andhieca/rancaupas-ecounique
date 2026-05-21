@@ -147,4 +147,37 @@ class VisitorController extends Controller
             'user_rating' => $userRating,
         ]);
     }
+
+    /**
+     * Update profil pengunjung
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'origin' => 'required|in:domestik,mancanegara',
+        ];
+
+        // Only validate password if it was provided
+        if ($request->filled('password')) {
+            $rules['password'] = 'string|min:6|confirmed';
+        }
+
+        $validated = $request->validate($rules);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->origin = $validated['origin'];
+        
+        if ($request->filled('password')) {
+            $user->password = bcrypt($validated['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('visitor.dashboard', ['tab' => 'profil'])->with('profile_success', 'Profil berhasil diperbarui!');
+    }
 }

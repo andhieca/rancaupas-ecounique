@@ -37,9 +37,9 @@
                     </a>
                     <div class="hidden sm:block w-px h-5 bg-forest-200"></div>
                     <div class="flex items-center space-x-2 sm:space-x-3">
-                        <span class="text-forest-700 font-medium hidden sm:flex items-center text-sm">
+                        <a href="{{ route('visitor.dashboard') }}?tab=profil" class="text-forest-700 hover:text-earth-600 font-medium hidden sm:flex items-center text-sm transition-colors">
                             <i data-lucide="user" class="w-4 h-4 mr-1.5 text-forest-400"></i>{{ auth()->user()->name }}
-                        </span>
+                        </a>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
                             <button type="submit" class="text-red-500 hover:text-red-700 font-medium flex items-center transition-colors bg-red-50 hover:bg-red-100 px-2.5 sm:px-3 py-1.5 rounded-lg text-sm">
@@ -79,6 +79,9 @@
                     </button>
                     <button @click="activeTab = 'rekomendasi'" :class="activeTab === 'rekomendasi' ? 'bg-forest-600 text-white shadow-lg shadow-forest-600/30' : 'text-forest-600 hover:bg-forest-50'" class="flex items-center px-4 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm rounded-lg sm:rounded-xl font-semibold transition-all duration-300 justify-center whitespace-nowrap">
                         <i data-lucide="sparkles" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> Rekomendasi
+                    </button>
+                    <button @click="activeTab = 'profil'" :class="activeTab === 'profil' ? 'bg-forest-600 text-white shadow-lg shadow-forest-600/30' : 'text-forest-600 hover:bg-forest-50'" class="flex items-center px-4 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm rounded-lg sm:rounded-xl font-semibold transition-all duration-300 justify-center whitespace-nowrap">
+                        <i data-lucide="user-cog" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> Profil
                     </button>
                 </div>
             </div>
@@ -397,6 +400,162 @@
                 </div>
             </div>
 
+            <!-- ============================================== -->
+            <!-- TAB 3: PROFIL                                  -->
+            <!-- ============================================== -->
+            <div x-show="activeTab === 'profil'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display:none;">
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white rounded-2xl sm:rounded-[1.5rem] shadow-md border border-forest-100 overflow-hidden">
+                        <!-- Profile Header -->
+                        <div class="bg-gradient-to-br from-forest-600 via-forest-700 to-forest-800 px-6 sm:px-8 py-8 sm:py-10 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 bg-white/5 rounded-full"></div>
+                            <div class="absolute bottom-0 left-1/4 -mb-10 w-32 h-32 bg-earth-500/10 rounded-full"></div>
+                            <div class="relative z-10 flex items-center space-x-5">
+                                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white text-2xl sm:text-3xl font-display font-bold border border-white/20 shadow-lg">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                                <div>
+                                    <h2 class="text-xl sm:text-2xl font-display font-bold text-white">{{ auth()->user()->name }}</h2>
+                                    <p class="text-forest-200 text-sm mt-1 flex items-center">
+                                        <i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5"></i>{{ auth()->user()->email }}
+                                    </p>
+                                    <span class="inline-flex items-center mt-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest {{ auth()->user()->origin === 'domestik' ? 'bg-forest-500/30 text-forest-100 border border-forest-400/30' : 'bg-earth-500/30 text-earth-100 border border-earth-400/30' }}">
+                                        <i data-lucide="{{ auth()->user()->origin === 'domestik' ? 'flag' : 'globe' }}" class="w-3 h-3 mr-1.5"></i>
+                                        {{ auth()->user()->origin === 'domestik' ? 'Domestik (WNI)' : 'Mancanegara (WNA)' }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Form -->
+                        <div class="px-6 sm:px-8 py-6 sm:py-8">
+                            @if(session('profile_success'))
+                                <div class="bg-forest-50 border border-forest-200 text-forest-700 px-4 py-3 rounded-xl flex items-center mb-6 text-sm font-medium shadow-sm" x-data="{ show: true }" x-show="show" x-transition>
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 mr-3 text-forest-500 shrink-0"></i>
+                                    {{ session('profile_success') }}
+                                    <button @click="show = false" class="ml-auto text-forest-400 hover:text-forest-600"><i data-lucide="x" class="w-4 h-4"></i></button>
+                                </div>
+                            @endif
+
+                            @if($errors->any())
+                                <div class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm">
+                                    <div class="flex items-center mb-2 font-bold"><i data-lucide="alert-circle" class="w-5 h-5 mr-2"></i> Terjadi kesalahan:</div>
+                                    <ul class="list-disc list-inside space-y-1 ml-7">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('visitor.profile.update') }}" class="space-y-5">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <div class="w-8 h-8 rounded-lg bg-forest-100 flex items-center justify-center">
+                                        <i data-lucide="edit-3" class="w-4 h-4 text-forest-600"></i>
+                                    </div>
+                                    <h3 class="text-lg font-display font-bold text-forest-900">Edit Profil</h3>
+                                </div>
+
+                                <!-- Nama -->
+                                <div>
+                                    <label for="profile_name" class="block text-sm font-bold text-forest-800 mb-1.5">Nama Lengkap</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <i data-lucide="user" class="h-4 w-4 text-forest-400"></i>
+                                        </div>
+                                        <input id="profile_name" name="name" type="text" required value="{{ old('name', auth()->user()->name) }}"
+                                            class="w-full pl-11 pr-4 py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-forest-900 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all">
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div>
+                                    <label for="profile_email" class="block text-sm font-bold text-forest-800 mb-1.5">Email Address</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <i data-lucide="mail" class="h-4 w-4 text-forest-400"></i>
+                                        </div>
+                                        <input id="profile_email" name="email" type="email" required value="{{ old('email', auth()->user()->email) }}"
+                                            class="w-full pl-11 pr-4 py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-forest-900 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all">
+                                    </div>
+                                </div>
+
+                                <!-- Asal -->
+                                <div>
+                                    <label for="profile_origin" class="block text-sm font-bold text-forest-800 mb-1.5">Asal Pengunjung</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <i data-lucide="map" class="h-4 w-4 text-forest-400"></i>
+                                        </div>
+                                        <select id="profile_origin" name="origin" required
+                                            class="w-full pl-11 pr-4 py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-forest-900 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all appearance-none">
+                                            <option value="domestik" {{ old('origin', auth()->user()->origin) == 'domestik' ? 'selected' : '' }}>Domestik (WNI)</option>
+                                            <option value="mancanegara" {{ old('origin', auth()->user()->origin) == 'mancanegara' ? 'selected' : '' }}>Mancanegara (WNA)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Divider -->
+                                <div class="border-t border-forest-100 pt-5">
+                                    <div class="flex items-center space-x-3 mb-4">
+                                        <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                                            <i data-lucide="lock" class="w-4 h-4 text-amber-600"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-base font-display font-bold text-forest-900">Ubah Password</h3>
+                                            <p class="text-xs text-forest-500">Kosongkan jika tidak ingin mengubah password</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Password -->
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="profile_password" class="block text-sm font-bold text-forest-800 mb-1.5">Password Baru</label>
+                                            <div class="relative">
+                                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                    <i data-lucide="key-round" class="h-4 w-4 text-forest-400"></i>
+                                                </div>
+                                                <input id="profile_password" name="password" type="password"
+                                                    class="w-full pl-11 pr-4 py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-forest-900 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all"
+                                                    placeholder="Minimal 6 karakter">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="profile_password_confirmation" class="block text-sm font-bold text-forest-800 mb-1.5">Konfirmasi Password Baru</label>
+                                            <div class="relative">
+                                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                    <i data-lucide="key-round" class="h-4 w-4 text-forest-400"></i>
+                                                </div>
+                                                <input id="profile_password_confirmation" name="password_confirmation" type="password"
+                                                    class="w-full pl-11 pr-4 py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-forest-900 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all"
+                                                    placeholder="Ulangi password baru">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Submit -->
+                                <button type="submit"
+                                    class="w-full flex items-center justify-center py-3.5 bg-forest-700 hover:bg-forest-800 font-bold text-white rounded-xl transition-all shadow-lg shadow-forest-700/20 text-sm mt-2">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan Perubahan
+                                </button>
+                            </form>
+
+                            <!-- Account Info -->
+                            <div class="mt-6 pt-5 border-t border-forest-100">
+                                <div class="flex items-center text-xs text-forest-400 space-x-4">
+                                    <span class="flex items-center"><i data-lucide="calendar" class="w-3.5 h-3.5 mr-1.5"></i> Bergabung: {{ auth()->user()->created_at->translatedFormat('d F Y') }}</span>
+                                    <span class="flex items-center"><i data-lucide="shield" class="w-3.5 h-3.5 mr-1.5"></i> Role: {{ ucfirst(auth()->user()->role) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -641,7 +800,7 @@
     <script>
         function visitorDashboard() {
             return {
-                activeTab: '{{ $isCalculated ? 'rekomendasi' : 'katalog' }}',
+                activeTab: '{{ request('tab') === 'profil' ? 'profil' : ($isCalculated ? 'rekomendasi' : 'katalog') }}',
                 sortBy: 'rating',
                 searchQuery: '',
                 detailModal: false,
