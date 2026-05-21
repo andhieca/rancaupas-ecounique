@@ -170,4 +170,66 @@ class AdminController extends Controller
             'minMax' => $minMax,
         ];
     }
+
+    public function exportSaw(Request $request)
+    {
+        $date = $request->input('date', date('Y-m-d'));
+        
+        $tourisms = Tourism::where('status', 'aktif')
+            ->withCount('ratings')
+            ->withAvg('ratings', 'rating')
+            ->get();
+            
+        $criteria = Criterion::orderBy('sort_order')->get();
+        $sawData = $this->calculateSAW($tourisms, $criteria);
+        
+        $fileName = 'Laporan_Rekomendasi_Wisata_SAW_' . $date . '.csv';
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+        
+        $callback = function() use($sawData, $date) {
+            $file = fopen('php://output', 'w');
+            
+            // Add UTF-8 BOM for Excel to read correctly
+            fputs($file, "\xEF\xBB\xBF");
+            
+            fputcsv($file, ['Laporan Destinasi Optimal Berdasarkan Perhitungan SAW']);
+            fputcsv($file, ['Tanggal: ' . $date]);
+            fputcsv($file, []);
+            
+            // Headers
+            $columns = ['Ranking', 'Nama Wisata', 'Jenis Wisata', 'Nilai Akhir (Yi)'];
+            foreach ($sawData['criteria'] as $c) {
+                $columns[] = explode(' (', $c->name)[0] . ' (' . number_format($c->weight, 2) . ')';
+            }
+            fputcsv($file, $columns);
+            
+            // Data Rows
+            foreach ($sawData['ranking'] as $row) {
+                $tourism = $row['tourism'];
+                $csvRow = [
+                    $row['rank'],
+                    $tourism->name,
+                    $tourism->category ?: 'Kunjungan',
+                    number_format($row['score'], 4, ',', '.'),
+                ];
+                
+                foreach ($sawData['criteria'] as $c) {
+                    $val = $sawData['decisionMatrix'][$tourism->id][$c->code] ?? 0;
+                    $csvRow[] = is_numeric($val) ? number_format((float)$val, 2, ',', '.') : $val;
+                }
+                
+                fputcsv($file, $csvRow);
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

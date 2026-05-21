@@ -806,19 +806,27 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded shadow-sm border border-gray-200 flex flex-col justify-between">
-                        <div>
-                            <div
-                                class="w-12 h-12 bg-forest-100 text-forest-600 rounded flex items-center justify-center mb-4 border border-forest-200">
-                                <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+                        <form action="{{ route('admin.export.saw') }}" method="GET" class="h-full flex flex-col justify-between">
+                            <div>
+                                <div
+                                    class="w-12 h-12 bg-forest-100 text-forest-600 rounded flex items-center justify-center mb-4 border border-forest-200">
+                                    <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="text-xl font-medium text-gray-800 mb-2">Laporan Destinasi Optimal</h3>
+                                <p class="text-gray-500 text-sm mb-4">Unduh hasil kalkulasi SAW historis dan laporan
+                                    rekomendasi objek wisata terbaik periode ini.</p>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">Tanggal Laporan</label>
+                                    <input type="date" name="date" required value="{{ date('Y-m-d') }}"
+                                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-100 text-sm transition-all bg-gray-50 hover:bg-white focus:bg-white text-gray-700 font-medium">
+                                </div>
                             </div>
-                            <h3 class="text-xl font-medium text-gray-800 mb-2">Laporan Destinasi Optimal</h3>
-                            <p class="text-gray-500 text-sm mb-6">Unduh hasil kalkulasi SAW historis dan laporan
-                                rekomendasi objek wisata terbaik periode ini.</p>
-                        </div>
-                        <button
-                            class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 rounded font-medium flex items-center justify-center transition-colors">
-                            <i data-lucide="download" class="w-4 h-4 mr-2"></i> Ekspor format Excel
-                        </button>
+                            <button type="submit"
+                                class="w-full bg-white border border-gray-300 hover:bg-forest-50 hover:border-forest-300 text-gray-700 hover:text-forest-700 py-2.5 rounded-lg font-bold flex items-center justify-center transition-all shadow-sm">
+                                <i data-lucide="download" class="w-4 h-4 mr-2"></i> Ekspor format Excel
+                            </button>
+                        </form>
                     </div>
 
                     <div class="bg-white p-6 rounded shadow-sm border border-gray-200 flex flex-col justify-between">

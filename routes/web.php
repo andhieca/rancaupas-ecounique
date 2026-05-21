@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/export-saw', [AdminController::class, 'exportSaw'])->name('admin.export.saw');
     Route::resource('tourism', \App\Http\Controllers\TourismController::class)->only(['store', 'update', 'destroy']);
     Route::resource('settings', \App\Http\Controllers\SettingController::class)->only(['store', 'update', 'destroy']);
     Route::resource('criteria', \App\Http\Controllers\CriterionController::class)->only(['store', 'update', 'destroy']);
