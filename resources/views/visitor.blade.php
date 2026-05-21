@@ -407,19 +407,19 @@
                 <div class="max-w-2xl mx-auto">
                     <div class="bg-white rounded-2xl sm:rounded-[1.5rem] shadow-md border border-forest-100 overflow-hidden">
                         <!-- Profile Header -->
-                        <div class="bg-gradient-to-br from-forest-600 via-forest-700 to-forest-800 px-6 sm:px-8 py-8 sm:py-10 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 bg-white/5 rounded-full"></div>
-                            <div class="absolute bottom-0 left-1/4 -mb-10 w-32 h-32 bg-earth-500/10 rounded-full"></div>
-                            <div class="relative z-10 flex items-center space-x-5">
-                                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white text-2xl sm:text-3xl font-display font-bold border border-white/20 shadow-lg">
+                        <div class="bg-gradient-to-br from-forest-600 via-forest-700 to-forest-800 px-6 sm:px-10 py-10 sm:py-12 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 -mt-12 -mr-12 w-56 h-56 bg-white/5 rounded-full"></div>
+                            <div class="absolute bottom-0 left-1/4 -mb-14 w-40 h-40 bg-earth-500/10 rounded-full"></div>
+                            <div class="relative z-10 flex flex-col sm:flex-row items-center sm:items-center gap-5 sm:gap-6">
+                                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white text-3xl sm:text-4xl font-display font-bold border border-white/20 shadow-xl shrink-0">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
-                                <div>
-                                    <h2 class="text-xl sm:text-2xl font-display font-bold text-white">{{ auth()->user()->name }}</h2>
-                                    <p class="text-forest-200 text-sm mt-1 flex items-center">
-                                        <i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5"></i>{{ auth()->user()->email }}
+                                <div class="text-center sm:text-left">
+                                    <h2 class="text-2xl sm:text-3xl font-display font-bold text-white leading-tight">{{ auth()->user()->name }}</h2>
+                                    <p class="text-forest-200 text-sm mt-1.5 flex items-center justify-center sm:justify-start">
+                                        <i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5 shrink-0"></i>{{ auth()->user()->email }}
                                     </p>
-                                    <span class="inline-flex items-center mt-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest {{ auth()->user()->origin === 'domestik' ? 'bg-forest-500/30 text-forest-100 border border-forest-400/30' : 'bg-earth-500/30 text-earth-100 border border-earth-400/30' }}">
+                                    <span class="inline-flex items-center mt-3 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest {{ auth()->user()->origin === 'domestik' ? 'bg-forest-500/30 text-forest-100 border border-forest-400/30' : 'bg-earth-500/30 text-earth-100 border border-earth-400/30' }}">
                                         <i data-lucide="{{ auth()->user()->origin === 'domestik' ? 'flag' : 'globe' }}" class="w-3 h-3 mr-1.5"></i>
                                         {{ auth()->user()->origin === 'domestik' ? 'Domestik (WNI)' : 'Mancanegara (WNA)' }}
                                     </span>
