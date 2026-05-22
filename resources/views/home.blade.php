@@ -81,37 +81,33 @@
             <div class="relative z-10 text-center px-4 md:px-8 max-w-5xl mx-auto py-12 md:py-20 w-full">
                 <div
                     class="inline-block mb-6 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold tracking-wide uppercase shadow-sm">
-                    <i data-lucide="leaf" class="w-4 h-4 inline mr-1 -mt-1 text-earth-300"></i> Destinasi Alam Terbaik
+                    <i data-lucide="leaf" class="w-4 h-4 inline mr-1 -mt-1 text-earth-300"></i> {{ __('messages.hero_badge') }}
                 </div>
                 <h1
                     class="text-5xl sm:text-6xl md:text-7xl font-display font-extrabold text-white mb-6 leading-tight tracking-tight drop-shadow-lg">
-                    Selamat Datang <br class="hidden sm:block">
+                    {{ __('messages.hero_welcome') }} <br class="hidden sm:block">
                     <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-earth-400 to-green-300 inline-block hover:scale-105 hover:rotate-1 transition-all duration-300 drop-shadow-md">di Ranca
-                        Upas</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-earth-400 to-green-300 inline-block hover:scale-105 hover:rotate-1 transition-all duration-300 drop-shadow-md">{{ __('messages.hero_in') }}</span>
                 </h1>
                 <p class="text-lg sm:text-xl text-white mb-10 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-md">
-                    Ranca Upas adalah tempat wisata alam yang menawarkan pengalaman unik dengan udara segar dan pemandangan indah, serta mengajak anda mencoba berbagai jenis camping seru yang tersedia disini. Temukan paket wisata terbaik kami dan buat liburan anda tak terlupakan.
+                    {{ __('messages.hero_desc') }}
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
                     <a href="#informasi-wisata"
                         class="w-full sm:w-auto group inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-forest-900 bg-white backdrop-blur-sm border-2 border-white rounded-full hover:bg-forest-50 hover:border-forest-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1">
-                        <i data-lucide="info" class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform"></i> Lihat
-                        Informasi
+                        <i data-lucide="info" class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform"></i> {{ __('messages.btn_view_info') }}
                     </a>
                     @auth
                         <a href="{{ route('visitor.dashboard') }}"
                             class="w-full sm:w-auto group inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-earth-500 to-earth-600 border-2 border-transparent rounded-full hover:from-earth-400 hover:to-earth-500 transition-all duration-300 shadow-xl hover:-translate-y-1">
                             <i data-lucide="sparkles"
-                                class="w-5 h-5 mr-2 animate-pulse group-hover:scale-110 transition-transform"></i> Cari
-                            Rekomendasi
+                                class="w-5 h-5 mr-2 animate-pulse group-hover:scale-110 transition-transform"></i> {{ __('messages.btn_find_recs') }}
                         </a>
                     @else
                         <a href="{{ route('login') }}"
                             class="w-full sm:w-auto group inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-earth-500 to-earth-600 border-2 border-transparent rounded-full hover:from-earth-400 hover:to-earth-500 transition-all duration-300 shadow-xl hover:-translate-y-1">
                             <i data-lucide="log-in"
-                                class="w-5 h-5 mr-2 animate-pulse group-hover:scale-110 transition-transform"></i> Login & Cari
-                            Rekomendasi
+                                class="w-5 h-5 mr-2 animate-pulse group-hover:scale-110 transition-transform"></i> {{ __('messages.btn_login_recs') }}
                         </a>
                     @endauth
                 </div>
@@ -131,8 +127,8 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-forest-900 text-lg mb-1 group-hover:text-forest-700 transition-colors">
-                            Spot Menarik</h4>
-                        <p class="text-sm text-forest-500 leading-snug">Pesona bentang alam yang tak terlupakan</p>
+                            {{ __('messages.feat_1_title') }}</h4>
+                        <p class="text-sm text-forest-500 leading-snug">{{ __('messages.feat_1_desc') }}</p>
                     </div>
                 </div>
 
@@ -145,8 +141,8 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-forest-900 text-lg mb-1 group-hover:text-earth-600 transition-colors">
-                            Fasilitas Lengkap</h4>
-                        <p class="text-sm text-forest-500 leading-snug">Beragam utilitas pendukung kenyamanan</p>
+                            {{ __('messages.feat_2_title') }}</h4>
+                        <p class="text-sm text-forest-500 leading-snug">{{ __('messages.feat_2_desc') }}</p>
                     </div>
                 </div>
 
@@ -159,8 +155,8 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-forest-900 text-lg mb-1 group-hover:text-forest-700 transition-colors">
-                            Akses Terjangkau</h4>
-                        <p class="text-sm text-forest-500 leading-snug">Rute dan jarak tempuh yang mudah</p>
+                            {{ __('messages.feat_3_title') }}</h4>
+                        <p class="text-sm text-forest-500 leading-snug">{{ __('messages.feat_3_desc') }}</p>
                     </div>
                 </div>
 
@@ -173,11 +169,10 @@
                 <div class="text-center mb-16">
                     <div
                         class="inline-block mb-4 px-4 py-1.5 rounded-full bg-forest-100 border border-forest-200 text-forest-700 text-sm font-semibold tracking-wide uppercase">
-                        Menjelajahi Ranca Upas
+                        {{ __('messages.info_badge') }}
                     </div>
-                    <h2 class="text-4xl sm:text-5xl font-display font-extrabold text-forest-900 mb-6">Penawaran Spesial</h2>
-                    <p class="text-lg text-forest-600 max-w-2xl mx-auto">Berbagai jenis petualangan eksotis yang terpadu
-                        lembut dengan alam menanti Anda.</p>
+                    <h2 class="text-4xl sm:text-5xl font-display font-extrabold text-forest-900 mb-6">{{ __('messages.info_title') }}</h2>
+                    <p class="text-lg text-forest-600 max-w-2xl mx-auto">{{ __('messages.info_desc') }}</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -208,7 +203,7 @@
                                         <div class="flex items-center mb-2">
                                             <i data-lucide="star" class="w-3.5 h-3.5 text-gold-400 fill-current"></i>
                                             <span class="text-xs font-bold ml-1.5">{{ number_format($wisataCard->ratings_avg_rating ?? 0, 1) }}</span>
-                                            <span class="text-[11px] text-white/70 ml-1">({{ $wisataCard->ratings_count }} ulasan)</span>
+                                            <span class="text-[11px] text-white/70 ml-1">({{ $wisataCard->ratings_count }} {{ __('messages.reviews') }})</span>
                                         </div>
                                         <p class="text-earth-50 text-xs leading-relaxed mb-4 line-clamp-2">
                                             {{ $wisataCard->description }}</p>
@@ -220,7 +215,7 @@
                                     </div>
                                     <div @click="openDetail({{ $wisataCard->id }})"
                                         class="relative z-10 mt-auto flex justify-between items-center bg-white/20 p-1.5 pl-5 rounded-full backdrop-blur-md border border-white/20 cursor-pointer hover:bg-white/30 transition-colors">
-                                        <span class="font-bold tracking-wide text-xs">Lihat Detail</span>
+                                        <span class="font-bold tracking-wide text-xs">{{ __('messages.btn_view_detail') }}</span>
                                         <div
                                             class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-earth-600 group-hover:scale-110 transition-transform">
                                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -254,7 +249,7 @@
                                         <div class="flex items-center mb-2">
                                             <i data-lucide="star" class="w-3.5 h-3.5 text-gold-400 fill-current"></i>
                                             <span class="text-xs font-bold text-forest-800 ml-1.5">{{ number_format($wisataCard->ratings_avg_rating ?? 0, 1) }}</span>
-                                            <span class="text-[11px] text-forest-500 ml-1">({{ $wisataCard->ratings_count }} ulasan)</span>
+                                            <span class="text-[11px] text-forest-500 ml-1">({{ $wisataCard->ratings_count }} {{ __('messages.reviews') }})</span>
                                         </div>
                                         <p class="text-forest-600 text-xs leading-relaxed mb-4 line-clamp-2">
                                             {{ $wisataCard->description }}</p>
@@ -267,7 +262,7 @@
                                     <div class="relative z-10 mt-auto">
                                         <button @click="openDetail({{ $wisataCard->id }})"
                                             class="inline-flex items-center text-forest-700 font-bold hover:text-earth-600 transition-colors group/link cursor-pointer text-sm">
-                                            Lihat Detail <i data-lucide="arrow-right"
+                                            {{ __('messages.btn_view_detail') }} <i data-lucide="arrow-right"
                                                 class="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform"></i>
                                         </button>
                                     </div>
@@ -365,8 +360,7 @@
                                     class="inline-flex items-center bg-gradient-to-r from-forest-50 to-white border border-forest-200 px-5 py-2.5 rounded-2xl shadow-sm">
                                     <i data-lucide="tag" class="w-5 h-5 text-earth-600 mr-2"></i>
                                     <div>
-                                        <p class="text-[10px] uppercase tracking-wider text-forest-500 font-semibold">Tiket
-                                            WNI</p>
+                                        <p class="text-[10px] uppercase tracking-wider text-forest-500 font-semibold">{{ __('messages.ticket_wni') }}</p>
                                         <p class="text-lg font-bold text-forest-900">Rp <span
                                                 x-text="formatPrice(detailData.price_wni)"></span></p>
                                     </div>
@@ -375,8 +369,7 @@
                                     class="inline-flex items-center bg-gradient-to-r from-earth-50 to-white border border-earth-200 px-5 py-2.5 rounded-2xl shadow-sm">
                                     <i data-lucide="globe" class="w-5 h-5 text-earth-600 mr-2"></i>
                                     <div>
-                                        <p class="text-[10px] uppercase tracking-wider text-earth-500 font-semibold">Tiket
-                                            WNA</p>
+                                        <p class="text-[10px] uppercase tracking-wider text-earth-500 font-semibold">{{ __('messages.ticket_wna') }}</p>
                                         <p class="text-lg font-bold text-earth-900">Rp <span
                                                 x-text="formatPrice(detailData.price_wna)"></span></p>
                                     </div>
@@ -402,13 +395,13 @@
                                             </template>
                                         </div>
                                         <p class="text-xs text-forest-500"><span
-                                                x-text="detailData.ratings_count || 0"></span> ulasan pengunjung</p>
+                                                x-text="detailData.ratings_count || 0"></span> {{ __('messages.visitor_reviews') }}</p>
                                     </div>
                                 </div>
                                 <div class="sm:ml-auto">
                                     <a href="{{ route('login') }}"
                                         class="inline-flex items-center justify-center bg-forest-600 hover:bg-forest-700 text-white font-medium text-sm px-4 py-2 rounded-xl transition-colors">
-                                        <i data-lucide="log-in" class="w-4 h-4 mr-2"></i> Login untuk Review
+                                        <i data-lucide="log-in" class="w-4 h-4 mr-2"></i> {{ __('messages.btn_login_review') }}
                                     </a>
                                 </div>
                             </div>
@@ -416,16 +409,16 @@
                             <!-- Description -->
                             <div>
                                 <h3 class="text-lg font-bold text-forest-900 mb-2 flex items-center">
-                                    <i data-lucide="info" class="w-5 h-5 mr-2 text-forest-500"></i> Deskripsi
+                                    <i data-lucide="info" class="w-5 h-5 mr-2 text-forest-500"></i> {{ __('messages.desc') }}
                                 </h3>
                                 <p class="text-forest-600 leading-relaxed"
-                                    x-text="detailData.description || 'Belum ada deskripsi.'"></p>
+                                    x-text="detailData.description || '{{ __('messages.no_desc') }}'"></p>
                             </div>
 
                             <!-- Facilities -->
                             <div x-show="detailData.facilities_list">
                                 <h3 class="text-lg font-bold text-forest-900 mb-2 flex items-center">
-                                    <i data-lucide="check-circle-2" class="w-5 h-5 mr-2 text-earth-500"></i> Fasilitas
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 mr-2 text-earth-500"></i> {{ __('messages.facilities') }}
                                 </h3>
                                 <p class="text-forest-600 leading-relaxed" x-text="detailData.facilities_list"></p>
                             </div>
@@ -433,12 +426,12 @@
                             <!-- Map Link -->
                             <div x-show="detailData.map_url">
                                 <h3 class="text-lg font-bold text-forest-900 mb-2 flex items-center">
-                                    <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-red-500"></i> Lokasi
+                                    <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-red-500"></i> {{ __('messages.location') }}
                                 </h3>
                                 <a :href="'https://www.google.com/maps?q=' + detailData.map_url" target="_blank"
                                     class="inline-flex items-center bg-blue-50 border border-blue-200 text-blue-700 px-4 py-2 rounded-xl hover:bg-blue-100 transition-colors font-medium text-sm">
                                     <i data-lucide="external-link" class="w-4 h-4 mr-2"></i>
-                                    Buka di Google Maps
+                                    {{ __('messages.open_map') }}
                                 </a>
                             </div>
                         </div>

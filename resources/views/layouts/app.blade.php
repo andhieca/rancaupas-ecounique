@@ -29,15 +29,15 @@
                 </div>
                 <nav class="hidden md:flex items-center space-x-8">
                     <a href="#beranda"
-                        class="text-forest-800 hover:text-earth-600 font-medium transition-colors">Beranda</a>
+                        class="text-forest-800 hover:text-earth-600 font-medium transition-colors">{{ __('messages.nav_home') }}</a>
                     <a href="#informasi-wisata"
-                        class="text-forest-800 hover:text-earth-600 font-medium transition-colors">Informasi Wisata</a>
+                        class="text-forest-800 hover:text-earth-600 font-medium transition-colors">{{ __('messages.nav_info') }}</a>
 
                     @auth
                         @if(auth()->user()->role === 'admin')
                             <a href="/admin"
                                 class="border flex items-center border-forest-800 text-forest-800 hover:bg-forest-800 hover:text-white px-5 py-1.5 rounded transition-all font-medium">
-                                <i data-lucide="layout-dashboard" class="w-4 h-4 mr-2"></i>Dashboard
+                                <i data-lucide="layout-dashboard" class="w-4 h-4 mr-2"></i>{{ __('messages.nav_dashboard') }}
                             </a>
                         @else
                             <a href="{{ route('visitor.dashboard') }}"
@@ -48,9 +48,20 @@
                     @else
                         <a href="{{ route('login') }}"
                             class="border flex items-center border-forest-800 text-forest-800 hover:bg-forest-800 hover:text-white px-5 py-1.5 rounded transition-all font-medium">
-                            <i data-lucide="log-in" class="w-4 h-4 mr-2"></i>Login Akses
+                            <i data-lucide="log-in" class="w-4 h-4 mr-2"></i>{{ __('messages.nav_login') }}
                         </a>
                     @endauth
+
+                    <!-- Language Switcher -->
+                    <div class="relative" x-data="{ langOpen: false }">
+                        <button @click="langOpen = !langOpen" class="flex items-center text-forest-800 hover:text-earth-600 font-medium transition-colors">
+                            <i data-lucide="globe" class="w-4 h-4 mr-1"></i> {{ strtoupper(App::getLocale()) }}
+                        </button>
+                        <div x-show="langOpen" @click.away="langOpen = false" class="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg py-1 border border-forest-100 z-50">
+                            <a href="{{ route('lang.switch', 'id') }}" class="block px-4 py-2 text-sm text-forest-800 hover:bg-forest-50 {{ App::getLocale() === 'id' ? 'font-bold' : '' }}">ID</a>
+                            <a href="{{ route('lang.switch', 'en') }}" class="block px-4 py-2 text-sm text-forest-800 hover:bg-forest-50 {{ App::getLocale() === 'en' ? 'font-bold' : '' }}">EN</a>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </div>
@@ -79,7 +90,7 @@
 
                 <!-- Contact -->
                 <div class="col-span-1">
-                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Kontak Kami</h4>
+                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">{{ __('messages.contact_us') }}</h4>
                     <ul class="space-y-3 text-sm text-forest-300">
                         <li class="flex items-start">
                             <i data-lucide="phone" class="w-4 h-4 mr-3 mt-0.5 text-forest-400 shrink-0"></i>
@@ -94,7 +105,7 @@
 
                 <!-- Social Media -->
                 <div class="col-span-1">
-                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Sosial Media</h4>
+                    <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">{{ __('messages.social_media') }}</h4>
                     <ul class="space-y-3 text-sm text-forest-300">
                         <li class="flex items-center">
                             <svg class="w-4 h-4 mr-3 text-forest-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
@@ -113,7 +124,7 @@
             </div>
             
             <div class="border-t border-forest-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-forest-400">
-                <p>&copy; <span id="tahun"></span> Wisata Kawasan Ranca Upas. All rights reserved.</p>
+                <p>&copy; <span id="tahun"></span> {{ __('messages.footer_rights') }}</p>
                 <p>Designed with <i data-lucide="heart" class="w-3 h-3 inline-block text-red-500 mx-0.5 fill-red-500"></i> by Abelia Sapitri</p>
             </div>
         </div>

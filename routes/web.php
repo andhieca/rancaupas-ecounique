@@ -9,6 +9,13 @@ use App\Http\Controllers\VisitorController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tourism/detail/{tourism}', [HomeController::class, 'detail'])->name('tourism.detail');
 
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('lang.switch');
+
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');

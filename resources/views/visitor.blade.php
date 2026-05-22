@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard Pengunjung - Wisata Ranca Upas</title>
+    <title>{{ __('messages.nav_visitor_dashboard') }} - Wisata Ranca Upas</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
     <!-- Vite Assets (Tailwind CSS + JS) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -30,11 +30,11 @@
                         <img src="{{ asset('images/logo.png') }}" alt="Logo Ranca Upas" class="h-9 w-9 sm:h-11 sm:w-11 object-contain">
                     </a>
                     <span class="hidden sm:block text-forest-200 text-lg font-light shrink-0">|</span>
-                    <span class="hidden md:block text-forest-700 font-semibold text-sm tracking-wide truncate">Dashboard Pengunjung</span>
+                    <span class="hidden md:block text-forest-700 font-semibold text-sm tracking-wide truncate">{{ __('messages.nav_visitor_dashboard') }}</span>
                 </div>
                 <nav class="flex items-center space-x-2 sm:space-x-5 min-w-0">
                     <a href="{{ route('home') }}" class="text-forest-700 hover:text-earth-600 font-medium transition-colors hidden md:flex items-center text-sm shrink-0">
-                        <i data-lucide="home" class="w-4 h-4 mr-1.5"></i>Beranda
+                        <i data-lucide="home" class="w-4 h-4 mr-1.5"></i>{{ __('messages.nav_home') }}
                     </a>
                     <div class="hidden md:block w-px h-5 bg-forest-200 shrink-0"></div>
                     <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
@@ -44,9 +44,20 @@
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
                             <button type="submit" class="text-red-500 hover:text-red-700 font-medium flex items-center transition-colors bg-red-50 hover:bg-red-100 px-2.5 sm:px-3 py-1.5 rounded-lg text-sm">
-                                <i data-lucide="log-out" class="w-4 h-4 sm:mr-1.5"></i><span class="hidden sm:inline">Keluar</span>
+                                <i data-lucide="log-out" class="w-4 h-4 sm:mr-1.5"></i><span class="hidden sm:inline">{{ __('messages.nav_logout') }}</span>
                             </button>
                         </form>
+                        
+                        <!-- Language Switcher -->
+                        <div class="relative ml-2" x-data="{ langOpen: false }">
+                            <button @click="langOpen = !langOpen" class="flex items-center text-forest-700 hover:text-earth-600 font-medium transition-colors bg-forest-50 hover:bg-forest-100 px-2.5 sm:px-3 py-1.5 rounded-lg text-sm">
+                                <i data-lucide="globe" class="w-4 h-4 mr-1"></i> <span class="hidden sm:inline">{{ strtoupper(App::getLocale()) }}</span>
+                            </button>
+                            <div x-show="langOpen" @click.away="langOpen = false" class="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg py-1 border border-forest-100 z-50" style="display: none;">
+                                <a href="{{ route('lang.switch', 'id') }}" class="block px-4 py-2 text-sm text-forest-800 hover:bg-forest-50 {{ App::getLocale() === 'id' ? 'font-bold' : '' }}">ID</a>
+                                <a href="{{ route('lang.switch', 'en') }}" class="block px-4 py-2 text-sm text-forest-800 hover:bg-forest-50 {{ App::getLocale() === 'en' ? 'font-bold' : '' }}">EN</a>
+                            </div>
+                        </div>
                     </div>
                 </nav>
             </div>
@@ -64,10 +75,10 @@
                 <div class="absolute top-1/2 right-1/4 w-32 h-32 bg-white/[0.03] rounded-full"></div>
                 <div class="relative z-10">
                     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-white mb-2 sm:mb-3">
-                        Selamat Datang, {{ auth()->user()->name }}! 👋
+                        {{ __('messages.welcome_name', ['name' => auth()->user()->name]) }}
                     </h1>
                     <p class="text-sm sm:text-base lg:text-lg max-w-3xl leading-relaxed text-white mt-2">
-                        Jelajahi dan Temukan paket wisata terbaik kami dan buat liburan anda tak terlupakan.
+                        {{ __('messages.welcome_desc') }}
                     </p>
                 </div>
             </div>
@@ -76,13 +87,13 @@
             <div class="mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 scrollbar-hide">
                 <div class="inline-flex bg-white rounded-xl sm:rounded-2xl shadow-md border border-forest-100 p-1 sm:p-1.5 w-max">
                     <button @click="activeTab = 'katalog'" :class="activeTab === 'katalog' ? 'bg-forest-600 text-white shadow-lg shadow-forest-600/30' : 'text-forest-600 hover:bg-forest-50'" class="flex items-center px-4 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm rounded-lg sm:rounded-xl font-semibold transition-all duration-300 justify-center whitespace-nowrap">
-                        <i data-lucide="layout-grid" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> Katalog Wisata
+                        <i data-lucide="layout-grid" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> {{ __('messages.tab_catalog') }}
                     </button>
                     <button @click="activeTab = 'rekomendasi'" :class="activeTab === 'rekomendasi' ? 'bg-forest-600 text-white shadow-lg shadow-forest-600/30' : 'text-forest-600 hover:bg-forest-50'" class="flex items-center px-4 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm rounded-lg sm:rounded-xl font-semibold transition-all duration-300 justify-center whitespace-nowrap">
-                        <i data-lucide="sparkles" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> Rekomendasi
+                        <i data-lucide="sparkles" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> {{ __('messages.tab_recs') }}
                     </button>
                     <button @click="activeTab = 'profil'" :class="activeTab === 'profil' ? 'bg-forest-600 text-white shadow-lg shadow-forest-600/30' : 'text-forest-600 hover:bg-forest-50'" class="flex items-center px-4 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm rounded-lg sm:rounded-xl font-semibold transition-all duration-300 justify-center whitespace-nowrap">
-                        <i data-lucide="user-cog" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> Profil
+                        <i data-lucide="user-cog" class="w-4 h-4 sm:w-[18px] sm:h-[18px] mr-1.5 sm:mr-2 shrink-0"></i> {{ __('messages.tab_profile') }}
                     </button>
                 </div>
             </div>
@@ -98,27 +109,27 @@
                         <!-- Search -->
                         <div class="relative flex-1 w-full min-w-0">
                             <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-forest-400 pointer-events-none"></i>
-                            <input x-model="searchQuery" type="text" placeholder="Cari wisata berdasarkan nama..."
+                            <input x-model="searchQuery" type="text" placeholder="{{ __('messages.search_ph') }}"
                                 class="w-full pl-11 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-sm text-forest-900 placeholder-forest-400 focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all">
                         </div>
                         <!-- Sort -->
                         <div class="flex items-center space-x-2 w-full md:w-auto min-w-0">
                             <label class="text-xs sm:text-sm font-medium text-forest-600 whitespace-nowrap shrink-0">
-                                <i data-lucide="arrow-up-down" class="w-3.5 h-3.5 sm:w-4 sm:h-4 inline mr-1 -mt-0.5"></i>Urutkan:
+                                <i data-lucide="arrow-up-down" class="w-3.5 h-3.5 sm:w-4 sm:h-4 inline mr-1 -mt-0.5"></i>{{ __('messages.sort_by') }}
                             </label>
                             <select x-model="sortBy" class="bg-forest-50/50 border border-forest-200 text-forest-800 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 font-medium flex-1 sm:flex-auto min-w-0">
-                                <option value="rating">⭐ Rating Tertinggi</option>
-                                <option value="popular">🔥 Terpopuler</option>
-                                <option value="price_low">💰 Harga Termurah</option>
-                                <option value="price_high">💎 Harga Termahal</option>
-                                <option value="name">🔤 Nama A-Z</option>
+                                <option value="rating">{{ __('messages.sort_rating') }}</option>
+                                <option value="popular">{{ __('messages.sort_pop') }}</option>
+                                <option value="price_low">{{ __('messages.sort_price_low') }}</option>
+                                <option value="price_high">{{ __('messages.sort_price_high') }}</option>
+                                <option value="name">{{ __('messages.sort_az') }}</option>
                             </select>
                         </div>
                     </div>
                     <!-- Results count -->
                     <div class="mt-3 flex items-center text-xs sm:text-sm text-forest-500">
                         <i data-lucide="info" class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5"></i>
-                        Menampilkan <span class="font-bold text-forest-700 mx-1" x-text="sortedTourisms.length"></span> destinasi wisata
+                        {{ __('messages.showing') }} <span class="font-bold text-forest-700 mx-1" x-text="sortedTourisms.length"></span> {{ __('messages.destinations') }}
                     </div>
                 </div>
 
@@ -147,7 +158,7 @@
                             <!-- Content -->
                             <div class="p-4 sm:p-5 flex flex-col flex-1">
                                 <h3 class="text-base sm:text-lg font-display font-bold text-forest-900 mb-1.5 group-hover:text-forest-700 transition-colors line-clamp-1" x-text="wisata.name"></h3>
-                                <p class="text-forest-500 text-sm leading-relaxed mb-4 line-clamp-2" x-text="wisata.description || 'Belum ada deskripsi.'"></p>
+                                <p class="text-forest-500 text-sm leading-relaxed mb-4 line-clamp-2" x-text="wisata.description || '{{ __('messages.no_desc') }}'"></p>
 
                                 <!-- Price & Star Rating -->
                                 <div class="mt-auto flex items-center justify-between">
@@ -165,7 +176,7 @@
                                 <!-- CTA -->
                                 <div class="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-forest-100">
                                     <button class="w-full inline-flex items-center justify-center text-forest-700 font-bold hover:text-earth-600 transition-colors group/link text-xs sm:text-sm">
-                                        Lihat Detail
+                                        {{ __('messages.btn_view_detail') }}
                                         <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-2 group-hover/link:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                                     </button>
                                 </div>
@@ -179,8 +190,8 @@
                     <div class="w-24 h-24 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-6">
                         <i data-lucide="search-x" class="w-12 h-12 text-forest-400"></i>
                     </div>
-                    <h3 class="text-2xl font-display font-bold text-forest-900 mb-2">Tidak Ditemukan</h3>
-                    <p class="text-forest-500 max-w-md mx-auto">Tidak ada wisata yang cocok dengan pencarian Anda. Coba kata kunci lain.</p>
+                    <h3 class="text-2xl font-display font-bold text-forest-900 mb-2">{{ __('messages.not_found_title') }}</h3>
+                    <p class="text-forest-500 max-w-md mx-auto">{{ __('messages.not_found_desc') }}</p>
                 </div>
             </div>
 
@@ -194,21 +205,21 @@
                     <!-- Preference Form -->
                     <div class="w-full">
                         <div class="bg-white p-4 sm:p-6 md:p-7 rounded-2xl sm:rounded-[1.5rem] shadow-sm border border-forest-100">
-                            <h2 class="text-xl sm:text-2xl font-display font-bold text-forest-900 mb-1">Form Rekomendasi</h2>
-                            <p class="text-xs sm:text-sm text-forest-500 mb-5 sm:mb-6">Isi preferensi Anda untuk mendapatkan rekomendasi wisata di Ranca Upas.</p>
+                            <h2 class="text-xl sm:text-2xl font-display font-bold text-forest-900 mb-1">Form {{ __('messages.tab_recs') }}</h2>
+                            <p class="text-xs sm:text-sm text-forest-500 mb-5 sm:mb-6">{{ __('messages.rec_form_desc') }}</p>
 
                             <form action="{{ route('visitor.dashboard') }}?tab=rekomendasi" method="POST" class="space-y-4 sm:space-y-6">
                                 @csrf
 
-                                <!-- 1. Jenis Wisata -->
+                                <!-- {{ __('messages.type_label') }} -->
                                 <div>
-                                    <label class="block text-sm font-bold text-forest-900 mb-3">1. Jenis Wisata</label>
+                                    <label class="block text-sm font-bold text-forest-900 mb-3">{{ __('messages.type_label') }}</label>
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                                         <label class="relative cursor-pointer">
                                             <input type="radio" name="jenis_wisata" value="" class="peer sr-only" {{ empty(request('jenis_wisata')) ? 'checked' : '' }}>
                                             <div class="px-4 py-3 rounded-xl border border-gray-200 bg-white peer-checked:border-forest-500 peer-checked:bg-forest-50 peer-checked:text-forest-700 hover:bg-gray-50 flex items-center transition-all h-full">
                                                 <i data-lucide="layout-grid" class="w-5 h-5 mr-3 text-forest-600"></i>
-                                                <span class="text-sm font-bold">Semua Jenis</span>
+                                                <span class="text-sm font-bold">{{ __('messages.all_types') }}</span>
                                                 <div class="ml-auto w-5 h-5 rounded-full bg-forest-600 flex items-center justify-center opacity-0 peer-checked:opacity-100 transition-opacity">
                                                     <i data-lucide="check" class="w-3 h-3 text-white"></i>
                                                 </div>
@@ -231,9 +242,9 @@
 
                                 <!-- 2. Budget -->
                                 <div>
-                                    <label class="block text-sm font-bold text-forest-900 mb-2">2. Budget / Biaya per orang</label>
+                                    <label class="block text-sm font-bold text-forest-900 mb-2">{{ __('messages.budget_label') }}</label>
                                     <select name="budget" class="w-full bg-white border border-gray-200 text-forest-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest-500 text-sm font-medium shadow-sm">
-                                        <option value="semua" {{ request('budget') == 'semua' ? 'selected' : '' }}>Semua Harga</option>
+                                        <option value="semua" {{ request('budget') == 'semua' ? 'selected' : '' }}>{{ __('messages.all_prices') }}</option>
                                         <option value="under_50" {{ request('budget') == 'under_50' ? 'selected' : '' }}>< Rp 50.000</option>
                                         <option value="50_100" {{ request('budget') == '50_100' ? 'selected' : '' }}>Rp 50.000 - Rp 100.000</option>
                                         <option value="over_100" {{ request('budget') == 'over_100' ? 'selected' : '' }}>> Rp 100.000</option>
@@ -242,7 +253,7 @@
 
                                 <!-- 3. Fasilitas -->
                                 <div>
-                                    <label class="block text-sm font-bold text-forest-900 mb-2">3. Fasilitas yang diinginkan <span class="text-xs font-normal text-gray-500 ml-1">(Pilih lebih dari satu)</span></label>
+                                    <label class="block text-sm font-bold text-forest-900 mb-2">{{ __('messages.fac_label') }} <span class="text-xs font-normal text-gray-500 ml-1">{{ __('messages.choose_more') }}</span></label>
                                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
                                         @php
                                             $reqFasilitas = request('fasilitas', []);
@@ -259,18 +270,18 @@
 
                                 <!-- 4. Jarak -->
                                 <div>
-                                    <label class="block text-sm font-bold text-forest-900 mb-2">4. Jarak dari lokasi Wisata Rancaupas</label>
+                                    <label class="block text-sm font-bold text-forest-900 mb-2">{{ __('messages.dist_label') }}</label>
                                     <select name="jarak" class="w-full bg-white border border-gray-200 text-forest-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest-500 text-sm font-medium shadow-sm">
-                                        <option value="semua" {{ request('jarak') == 'semua' ? 'selected' : '' }}>Semua Jarak</option>
-                                        <option value="dekat" {{ request('jarak') == 'dekat' ? 'selected' : '' }}>Dekat (< 5 km)</option>
-                                        <option value="menengah" {{ request('jarak') == 'menengah' ? 'selected' : '' }}>Menengah (5 - 15 km)</option>
-                                        <option value="jauh" {{ request('jarak') == 'jauh' ? 'selected' : '' }}>Jauh (> 15 km)</option>
+                                        <option value="semua" {{ request('jarak') == 'semua' ? 'selected' : '' }}>{{ __('messages.all_dist') }}</option>
+                                        <option value="dekat" {{ request('jarak') == 'dekat' ? 'selected' : '' }}>{{ __('messages.dist_close') }}</option>
+                                        <option value="menengah" {{ request('jarak') == 'menengah' ? 'selected' : '' }}>{{ __('messages.dist_med') }}</option>
+                                        <option value="jauh" {{ request('jarak') == 'jauh' ? 'selected' : '' }}>{{ __('messages.dist_far') }}</option>
                                     </select>
                                 </div>
 
-                                <!-- 5. Rating Minimum -->
+                                <!-- {{ __('messages.rating_label') }} -->
                                 <div x-data="{ rating: {{ request('rating_min', 0) }} }">
-                                    <label class="block text-sm font-bold text-forest-900 mb-2">5. Rating Minimum <span class="text-xs font-normal text-gray-500 ml-1">(opsional)</span></label>
+                                    <label class="block text-sm font-bold text-forest-900 mb-2">{{ __('messages.rating_label') }} <span class="text-xs font-normal text-gray-500 ml-1">{{ __('messages.optional') }}</span></label>
                                     <div class="flex items-center space-x-1 mt-1">
                                         <input type="hidden" name="rating_min" x-model="rating">
                                         <template x-for="i in 5">
@@ -278,38 +289,38 @@
                                                 <svg :class="i <= rating ? 'fill-amber-400 text-amber-400' : 'text-gray-200'" class="w-7 h-7" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                             </button>
                                         </template>
-                                        <span class="text-sm text-forest-800 ml-4 font-medium" x-show="rating > 0"><span x-text="rating"></span> ke atas</span>
+                                        <span class="text-sm text-forest-800 ml-4 font-medium" x-show="rating > 0"><span x-text="rating"></span> {{ __('messages.and_up') }}</span>
                                     </div>
                                     <div class="mt-1 flex text-xs">
-                                        <button type="button" x-show="rating > 0" @click="rating = 0" class="text-red-500 hover:text-red-700 hover:underline">Reset rating</button>
+                                        <button type="button" x-show="rating > 0" @click="rating = 0" class="text-red-500 hover:text-red-700 hover:underline">{{ __('messages.reset_rating') }}</button>
                                     </div>
                                 </div>
 
                                 <button type="submit" name="calculate" value="1" class="w-full flex items-center justify-center py-3.5 bg-forest-700 hover:bg-forest-800 font-bold text-white rounded-xl transition-all shadow-lg shadow-forest-700/20 mt-6 text-sm">
-                                    <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5 mr-2"></i> Cari Rekomendasi
+                                    <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5 mr-2"></i> Cari {{ __('messages.tab_recs') }}
                                 </button>
                                 
                                 <div class="px-4 py-3 bg-blue-50/50 rounded-xl flex items-start text-xs text-forest-600 mt-6 border border-blue-100/50 leading-relaxed">
                                     <i data-lucide="info" class="w-4 h-4 mr-2 shrink-0 mt-0.5 text-blue-400"></i>
-                                    Sistem menggunakan filter terstruktur untuk mencari dan mengurutkan rekomendasi wisata sesuai preferensi Anda.
+                                    {{ __('messages.sys_info') }}
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <!-- Hasil Rekomendasi Area -->
+                    <!-- Hasil {{ __('messages.tab_recs') }} Area -->
                     <div class="w-full bg-white rounded-2xl sm:rounded-[1.5rem] border border-forest-100 shadow-sm p-4 sm:p-6 lg:p-7">
                         @if(!$isCalculated)
                         <div class="h-full flex flex-col items-center justify-center text-center p-6 sm:p-12 opacity-60">
                             <i data-lucide="list-filter" class="w-16 h-16 sm:w-20 sm:h-20 text-forest-300 mb-4"></i>
-                            <h3 class="text-lg sm:text-xl font-bold text-forest-900 mb-2">Belum Ada Rekomendasi</h3>
-                            <p class="text-forest-600 max-w-sm text-sm">Isi form preferensi di atas dan klik tombol "Cari Rekomendasi" untuk menampilkan destinasi terbaik Anda.</p>
+                            <h3 class="text-lg sm:text-xl font-bold text-forest-900 mb-2">Belum Ada {{ __('messages.tab_recs') }}</h3>
+                            <p class="text-forest-600 max-w-sm text-sm">Isi form preferensi di atas dan klik tombol "Cari {{ __('messages.tab_recs') }}" untuk menampilkan destinasi terbaik Anda.</p>
                         </div>
                         @else
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-5 sm:mb-6 gap-1">
                             <div>
-                                <h2 class="text-xl sm:text-2xl font-display font-bold text-forest-900 mb-0.5">Hasil Rekomendasi</h2>
-                                <p class="text-xs sm:text-sm text-forest-500">Hasil perhitungan berdasarkan preferensi Anda</p>
+                                <h2 class="text-xl sm:text-2xl font-display font-bold text-forest-900 mb-0.5">Hasil {{ __('messages.tab_recs') }}</h2>
+                                <p class="text-xs sm:text-sm text-forest-500">{{ __('messages.rec_res_desc') }}</p>
                             </div>
                         </div>
 
@@ -358,7 +369,7 @@
                                     <div class="flex flex-col items-center sm:items-end w-full">
                                         <!-- Price Badge -->
                                         <div class="bg-forest-50 px-3 sm:px-4 py-2 rounded-xl text-center border border-forest-100 w-full sm:w-auto">
-                                            <span class="block text-[10px] font-bold text-forest-600 uppercase mb-0.5">Biaya Tiket</span>
+                                            <span class="block text-[10px] font-bold text-forest-600 uppercase mb-0.5">{{ __('messages.ticket_cost') }}</span>
                                             <span class="block text-base sm:text-xl font-bold text-forest-800" style="line-height:1;">
                                                 Rp {{ number_format($wisata->price_wni, 0, ',', '.') }}
                                             </span>
@@ -376,7 +387,7 @@
                                         </div>
 
                                         <button class="mt-3 sm:mt-auto py-1.5 sm:py-2 text-xs sm:text-sm font-bold text-forest-600 hover:text-earth-600 w-full text-right sm:text-center group transition-colors">
-                                            Lihat Detail <i data-lucide="arrow-right" class="w-3 h-3 sm:w-3.5 sm:h-3.5 inline ml-0.5 group-hover:translate-x-1 transition-transform"></i>
+                                            {{ __('messages.btn_view_detail') }} <i data-lucide="arrow-right" class="w-3 h-3 sm:w-3.5 sm:h-3.5 inline ml-0.5 group-hover:translate-x-1 transition-transform"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -388,12 +399,12 @@
                         @if(count($results) > 0)
                         <div class="p-4 bg-blue-50/50 rounded-xl flex items-start text-xs text-blue-800 mt-6 border border-blue-100 leading-relaxed font-medium">
                             <i data-lucide="info" class="w-4 h-4 mr-2 shrink-0 mt-0.5 text-blue-500"></i>
-                            Ditemukan {{ count($results) }} tempat wisata yang sesuai dengan filter dan preferensi Anda.
+                            {{ __('messages.found') }} {{ count($results) }} {{ __('messages.match_desc') }}
                         </div>
                         @else
                         <div class="p-4 bg-amber-50/50 rounded-xl flex items-start text-xs text-amber-800 mt-6 border border-amber-100 leading-relaxed font-medium">
                             <i data-lucide="alert-circle" class="w-4 h-4 mr-2 shrink-0 mt-0.5 text-amber-500"></i>
-                            Tidak ada tempat wisata yang sesuai dengan filter Anda. Silakan longgarkan kriteria pencarian.
+                            {{ __('messages.no_match_desc') }}
                         </div>
                         @endif
                         @endif
@@ -407,7 +418,7 @@
             <div x-show="activeTab === 'profil'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display:none;">
                 <div class="max-w-2xl mx-auto">
                     <div class="bg-white rounded-2xl sm:rounded-[1.5rem] shadow-md border border-forest-100 overflow-hidden">
-                        <!-- Profile Header -->
+                        <!-- {{ __('messages.tab_profile') }}e Header -->
                         <div class="bg-gradient-to-br from-forest-600 via-forest-700 to-forest-800 px-6 sm:px-10 py-10 sm:py-12 relative overflow-hidden">
                             <div class="absolute top-0 right-0 -mt-12 -mr-12 w-56 h-56 bg-white/5 rounded-full"></div>
                             <div class="absolute bottom-0 left-1/4 -mb-14 w-40 h-40 bg-earth-500/10 rounded-full"></div>
@@ -422,13 +433,13 @@
                                     </p>
                                     <span class="inline-flex items-center mt-3 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest {{ auth()->user()->origin === 'domestik' ? 'bg-forest-500/30 text-forest-100 border border-forest-400/30' : 'bg-earth-500/30 text-earth-100 border border-earth-400/30' }}">
                                         <i data-lucide="{{ auth()->user()->origin === 'domestik' ? 'flag' : 'globe' }}" class="w-3 h-3 mr-1.5"></i>
-                                        {{ auth()->user()->origin === 'domestik' ? 'Domestik (WNI)' : 'Mancanegara (WNA)' }}
+                                        {{ auth()->user()->origin === 'domestik' ? '{{ __('messages.domestic') }}' : '{{ __('messages.intl') }}' }}
                                     </span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Profile Form -->
+                        <!-- {{ __('messages.tab_profile') }}e Form -->
                         <div class="px-6 sm:px-8 py-6 sm:py-8">
                             @if(session('profile_success'))
                                 <div class="bg-forest-50 border border-forest-200 text-forest-700 px-4 py-3 rounded-xl flex items-center mb-6 text-sm font-medium shadow-sm" x-data="{ show: true }" x-show="show" x-transition>
@@ -457,12 +468,12 @@
                                     <div class="w-8 h-8 rounded-lg bg-forest-100 flex items-center justify-center">
                                         <i data-lucide="edit-3" class="w-4 h-4 text-forest-600"></i>
                                     </div>
-                                    <h3 class="text-lg font-display font-bold text-forest-900">Edit Profil</h3>
+                                    <h3 class="text-lg font-display font-bold text-forest-900">Edit {{ __('messages.tab_profile') }}</h3>
                                 </div>
 
                                 <!-- Nama -->
                                 <div>
-                                    <label for="profile_name" class="block text-sm font-bold text-forest-800 mb-1.5">Nama Lengkap</label>
+                                    <label for="profile_name" class="block text-sm font-bold text-forest-800 mb-1.5">{{ __('messages.full_name') }}</label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                             <i data-lucide="user" class="h-4 w-4 text-forest-400"></i>
@@ -486,15 +497,15 @@
 
                                 <!-- Asal -->
                                 <div>
-                                    <label for="profile_origin" class="block text-sm font-bold text-forest-800 mb-1.5">Asal Pengunjung</label>
+                                    <label for="profile_origin" class="block text-sm font-bold text-forest-800 mb-1.5">{{ __('messages.visitor_origin') }}</label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                             <i data-lucide="map" class="h-4 w-4 text-forest-400"></i>
                                         </div>
                                         <select id="profile_origin" name="origin" required
                                             class="w-full pl-11 pr-4 py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-forest-900 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all appearance-none">
-                                            <option value="domestik" {{ old('origin', auth()->user()->origin) == 'domestik' ? 'selected' : '' }}>Domestik (WNI)</option>
-                                            <option value="mancanegara" {{ old('origin', auth()->user()->origin) == 'mancanegara' ? 'selected' : '' }}>Mancanegara (WNA)</option>
+                                            <option value="domestik" {{ old('origin', auth()->user()->origin) == 'domestik' ? 'selected' : '' }}>{{ __('messages.domestic') }}</option>
+                                            <option value="mancanegara" {{ old('origin', auth()->user()->origin) == 'mancanegara' ? 'selected' : '' }}>{{ __('messages.intl') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -506,26 +517,26 @@
                                             <i data-lucide="lock" class="w-4 h-4 text-amber-600"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-base font-display font-bold text-forest-900">Ubah Password</h3>
-                                            <p class="text-xs text-forest-500">Kosongkan jika tidak ingin mengubah password</p>
+                                            <h3 class="text-base font-display font-bold text-forest-900">{{ __('messages.change_pass') }}</h3>
+                                            <p class="text-xs text-forest-500">{{ __('messages.change_pass_desc') }}</p>
                                         </div>
                                     </div>
 
                                     <!-- Password -->
                                     <div class="space-y-4">
                                         <div>
-                                            <label for="profile_password" class="block text-sm font-bold text-forest-800 mb-1.5">Password Baru</label>
+                                            <label for="profile_password" class="block text-sm font-bold text-forest-800 mb-1.5">{{ __('messages.new_pass') }}</label>
                                             <div class="relative">
                                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                                     <i data-lucide="key-round" class="h-4 w-4 text-forest-400"></i>
                                                 </div>
                                                 <input id="profile_password" name="password" type="password"
                                                     class="w-full pl-11 pr-4 py-3 bg-forest-50/50 border border-forest-200 rounded-xl text-forest-900 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-forest-500 transition-all"
-                                                    placeholder="Minimal 6 karakter">
+                                                    placeholder="{{ __('messages.min_char') }}">
                                             </div>
                                         </div>
                                         <div>
-                                            <label for="profile_password_confirmation" class="block text-sm font-bold text-forest-800 mb-1.5">Konfirmasi Password Baru</label>
+                                            <label for="profile_password_confirmation" class="block text-sm font-bold text-forest-800 mb-1.5">Konfirmasi {{ __('messages.new_pass') }}</label>
                                             <div class="relative">
                                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                                     <i data-lucide="key-round" class="h-4 w-4 text-forest-400"></i>
@@ -541,7 +552,7 @@
                                 <!-- Submit -->
                                 <button type="submit"
                                     class="w-full flex items-center justify-center py-3.5 bg-forest-700 hover:bg-forest-800 font-bold text-white rounded-xl transition-all shadow-lg shadow-forest-700/20 text-sm mt-2">
-                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan Perubahan
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> {{ __('messages.save_changes') }}
                                 </button>
                             </form>
 
@@ -665,7 +676,7 @@
                                             <svg :class="s <= Math.round(detailData.ratings_avg_rating || 0) ? 'fill-amber-400 text-amber-400' : 'text-gray-200'" class="w-3.5 h-3.5" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                         </template>
                                     </div>
-                                    <p class="text-[11px] text-forest-500"><span x-text="detailData.ratings_count || 0"></span> ulasan</p>
+                                    <p class="text-[11px] text-forest-500"><span x-text="detailData.ratings_count || 0"></span> {{ __('messages.reviews') }}</p>
                                 </div>
                             </div>
                             <div class="flex flex-col items-end">
@@ -686,7 +697,7 @@
                             <h3 class="text-[11px] font-bold text-forest-400 mb-2 uppercase tracking-wider flex items-center">
                                 <i data-lucide="info" class="w-3.5 h-3.5 mr-1.5"></i> Deskripsi
                             </h3>
-                            <p class="text-forest-700 leading-relaxed text-sm" x-text="detailData.description || 'Belum ada deskripsi.'"></p>
+                            <p class="text-forest-700 leading-relaxed text-sm" x-text="detailData.description || '{{ __('messages.no_desc') }}'"></p>
                         </div>
 
                         <!-- Facilities as Chips -->
