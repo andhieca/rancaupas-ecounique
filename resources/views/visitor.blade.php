@@ -574,7 +574,7 @@
     <!-- ============================================== -->
     <!-- DETAIL MODAL                                   -->
     <!-- ============================================== -->
-    <div x-show="detailModal" class="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4 bg-black/40 backdrop-blur-md" style="display: none;" x-transition.opacity @keydown.escape.window="detailModal = false">
+    <div x-show="detailModal" class="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4 bg-black/40 backdrop-blur-md" style="display: none; z-index: 9998;" x-transition.opacity @keydown.escape.window="detailModal = false">
         <div @click.away="detailModal = false" class="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[92vh] sm:max-h-[85vh] overflow-y-auto relative" x-transition.scale.duration.200ms>
 
             <!-- Loading State -->
@@ -741,7 +741,7 @@
     </div>
 
     <!-- Lightbox Modal -->
-    <div x-show="lightboxModal" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div x-show="lightboxModal" style="display: none; z-index: 9999;" class="fixed inset-0 flex items-center justify-center p-4">
         <div x-show="lightboxModal" x-transition.opacity class="absolute inset-0 bg-black/90 backdrop-blur-sm" @click="lightboxModal = false"></div>
         <div x-show="lightboxModal" x-transition.scale.95 class="relative z-10 max-w-5xl w-full flex justify-center">
             <button @click="lightboxModal = false" class="absolute -top-12 right-0 md:-top-4 md:-right-12 bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition-colors focus:outline-none">
